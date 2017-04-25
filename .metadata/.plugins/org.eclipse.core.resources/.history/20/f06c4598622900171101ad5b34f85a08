@@ -1,0 +1,17 @@
+package db;
+
+public class Restaurant {
+	int businessID;
+	String name;
+	
+	
+	class Review {
+		public String review;
+		public int reviewScore;
+		
+		public Review(String r, int s) {
+			review = r;
+			reviewScore = s;
+		}
+	}
+}

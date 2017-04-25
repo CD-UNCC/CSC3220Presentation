@@ -1,0 +1,35 @@
+package db;
+
+import java.util.Vector;
+
+enum Risk {HIGH, MEDIUM, LOW};
+
+public class Restaurant {
+	int businessID;
+	String name;
+	int ZIP;
+	Vector<Review> reviews;
+	Vector<Inspection> inspections;
+	
+	public Restaurant () {
+		
+	}
+	
+	class Inspection {
+		public String inspectionID;
+		public int inspectionScore;
+		public Risk riskFactor;
+		public Inspection (){
+			
+		}
+	}
+	class Review {
+		public String review;
+		public int reviewScore;
+		
+		public Review(String r, int s) {
+			review = r;
+			reviewScore = s;
+		}
+	}
+}

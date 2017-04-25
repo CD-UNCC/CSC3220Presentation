@@ -1,0 +1,27 @@
+package db;
+
+import java.util.Vector;
+
+public class Restaurant {
+	int businessID;
+	String name;
+	Vector<Review> reviews;
+	
+	class Inspection {
+		public String inspectionID;
+		public int inspectionScore;
+		
+		public Inspection (){
+			
+		}
+	}
+	class Review {
+		public String review;
+		public int reviewScore;
+		
+		public Review(String r, int s) {
+			review = r;
+			reviewScore = s;
+		}
+	}
+}
