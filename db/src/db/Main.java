@@ -1,7 +1,10 @@
 package db;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -50,7 +53,45 @@ public class Main {
 	}
 	
 	private void parseDB() {
-		Vector<String> lines;
+		BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        
+        try {
+
+            br = new BufferedReader(new FileReader(currFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] splitLine = line.split(cvsSplitBy);
+                
+                parseLine(splitLine);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+	
+	private void parseLine(String[] line) {
+		if (!Restaurants.containsKey(line[0])) {
+			Integer zp;
+			if (line[0] == "" || line[1] == "")
+				return;
+			try {
+				zp = Integer.parseInt(line[5]);
+			} catch(NumberFormatException e) {return;}
+		}
 	}
 	
 	public Main() {

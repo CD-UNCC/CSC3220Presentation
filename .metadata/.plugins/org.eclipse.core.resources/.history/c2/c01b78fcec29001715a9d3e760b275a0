@@ -1,0 +1,81 @@
+package db;
+
+import java.util.HashMap;
+import java.util.Vector;
+
+enum Risk {HIGH, MEDIUM, LOW, NA};
+
+public class Restaurant {
+	public int businessID;
+	public String name;
+	public int ZIP;
+	public Vector<Review> reviews;
+	public HashMap<String, Inspection> inspections;
+	
+	public int inspHi;
+	public int inspMed;
+	public int inspAvg;
+	public int inspLo;
+	
+	public int revHi;
+	public int revMed;
+	public int revAvg;
+	public int revLo;
+	
+	public Restaurant (int b, String n, int z, Inspection i) {
+		inspections = new HashMap<String, Inspection>();
+		reviews = new Vector<Review>();
+		businessID = b;
+		name = n;
+		ZIP = z;
+	}
+	
+	public boolean addInspection(String id, String score, String risk) {
+		Integer Iscore;
+		Risk r;
+		try { Iscore = Integer.parseInt(score);} catch (NumberFormatException e) {return false;}
+		if (id == null)
+			return false;
+		switch(risk) {
+		case "High Risk":
+			r = Risk.HIGH;
+			break;
+		case "Moderate Risk":
+			r = Risk.MEDIUM;
+			break;
+		case "Low Risk":
+			r = Risk.LOW;
+			break;
+		default:
+			r = Risk.NA;
+			break;
+		}
+		
+		Inspection i = new Inspection(id, Iscore, r);
+		
+		inspections.addElement(i);
+		
+		return true;
+	}
+	
+	class Inspection {
+		public String inspectionID;
+		public int inspectionScore;
+		public Risk riskFactor;
+		
+		public Inspection (String ID, int sc, Risk r){
+			inspectionID = ID;
+			inspectionScore = sc;
+			riskFactor = r;
+		}
+	}
+	class Review {
+		public String review;
+		public int reviewScore;
+		
+		public Review(String r, int s) {
+			review = r;
+			reviewScore = s;
+		}
+	}
+}
