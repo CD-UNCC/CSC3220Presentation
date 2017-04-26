@@ -103,7 +103,7 @@ public class Restaurant {
 			inspMed =  (v1 + v2) / 2;
 		} else {
 			int vs = (v.size() + 1) / 2;
-			inspMed = v.elementAt(vs);
+			inspMed = v.elementAt(vs - 1);
 		}	
 	}
 	

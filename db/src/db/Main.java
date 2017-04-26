@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 	
@@ -26,6 +27,12 @@ public class Main {
 		Server  =  new Main();
 		//Server.run();
 		Server.updateDB();
+		Server.parseDB();
+		try {
+			TimeUnit.HOURS.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void run() {
@@ -56,31 +63,32 @@ public class Main {
 		BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
-        
+        int s = 0;
         try {
 
             br = new BufferedReader(new FileReader(currFile));
             while ((line = br.readLine()) != null) {
-
+            	
                 // use comma as separator
                 String[] splitLine = line.split(cvsSplitBy);
                 
                 parseLine(splitLine);
+                System.out.println(s);
+                s++;
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
+        
+        try {
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void parseLine(String[] line) {
@@ -91,11 +99,17 @@ public class Main {
 			try {
 				zp = Integer.parseInt(line[5]);
 			} catch(NumberFormatException e) {return;}
-		}
+			Restaurants.put(line[0], new Restaurant(line[0], line[1], zp));
+		} 
+		if (line[10] == "" || line[12] == "")
+			return;
+		String risk;
+		if (line.length == 16)
+		Restaurants.get(line[0]).addInspection(line[10], line[12], line[16]);
 	}
 	
 	public Main() {
 		ServerRunning = true;
-		
+		Restaurants = new HashMap<String, Restaurant>();
 	}
 }
